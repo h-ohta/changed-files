@@ -101,6 +101,9 @@ function get_diff() {
   
   git diff --diff-filter="$filter" --name-only --ignore-submodules=all --exit-code "$base$DIFF$sha" && exit_status=$? || exit_status=$?
   
+  if [[ $exit_status -eq 0 ]]; then
+    return 0
+  fi
   if [[ $exit_status -ne 1 ]]; then
     echo "::error::Failed to get changed files between: $base$DIFF$sha, $filter $exit_status $(git diff --diff-filter="$filter" --name-only --ignore-submodules=all "$base$DIFF$sha")" >&2
     return 1
