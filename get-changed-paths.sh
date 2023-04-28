@@ -99,8 +99,7 @@ function get_diff() {
     done < <(git submodule status --recursive | grep -e "^-" | awk '{print $2}')
   fi
   
-  # git diff --diff-filter="$filter" --name-only --ignore-submodules=all "$base$DIFF$sha" && exit_status=$? || exit_status=$?
-  exit_status=$?
+  git diff --diff-filter="$filter" --name-only --ignore-submodules=all "$base$DIFF$sha" && exit_status=$?
   
   if [[ $exit_status -ne 0 ]]; then
     echo "::error::Failed to get changed files between: $base$DIFF$sha, $filter $exit_status $(git diff --diff-filter="$filter" --name-only --ignore-submodules=all "$base$DIFF$sha")" >&2
